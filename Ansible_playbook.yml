@@ -8,7 +8,7 @@
       docker_container:
         name: Prod_Server
         state: started
-        copy:
+        put:
           src: target/*.jar
           dest: /
 
