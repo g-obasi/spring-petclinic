@@ -11,9 +11,9 @@ pipeline {
       }
     }
 
-    stage('Execute Jar file') {
+    stage('Deploy Artifact on Prod server.') {
       steps {
-        sh 'java -jar target/*.jar'
+        sh 'ansible-playbook Ansible_playbook.yml'
       }
     }
 
