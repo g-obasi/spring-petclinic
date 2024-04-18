@@ -1,0 +1,19 @@
+- hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+
+    - name: Copy JAR file into existing container
+      docker_container:
+        name: target_container
+        state: started
+        copy:
+          src: /path/to/your/jar/file/app.jar
+          dest: /path/in/target/container/app.jar
+
+    - name: Execute JAR file in target container
+      docker_container:
+        name: target_container
+        state: started
+        command: java -jar /path/in/target/container/app.jar
