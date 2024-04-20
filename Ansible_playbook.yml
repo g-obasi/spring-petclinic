@@ -6,11 +6,11 @@
         name: docker
         state: present
 
-   -  name: Enable docker service
+    - name: Enable docker service
       systemd:
-       name: docker.service
-       daemon_reload: true
-       enabled: yes
+        name: docker.service
+        daemon_reload: true
+        enabled: yes
 
     - name: Copy Jar Artifact to docker container
       shell: docker cp target/*.jar Prod_Server:/
