@@ -4,7 +4,7 @@
   tasks:
     - name: Install Docker
       package:
-        name: docker-ce
+        name: docker
         state: present
 
     - name: Start docker daemon
@@ -13,7 +13,7 @@
         state: started
         enabled: yes
 
-    - name: Copy index.html to docker container
+    - name: Copy Jar Artifact to docker container
       community.docker.docker_container_copy_into:
         container: Prod_Server
         path: target/*.jar
