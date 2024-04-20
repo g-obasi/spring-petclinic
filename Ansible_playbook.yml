@@ -1,19 +1,19 @@
-- hosts: localhost
-  connection: local
-  gather_facts: false
-
+- name: Install Docker and run httpd container
+  hosts: all
   tasks:
+    - name: Install Docker
+      package:
+        name: docker-ce
+        state: present
 
-    - name: Copy JAR file into existing container
-      docker_container:
-        name: Prod_Server
+    - name: Start docker daemon
+      service:
+        name: docker
         state: started
-        put:
-          src: target/*.jar
-          dest: /
+        enabled: yes
 
-    - name: Execute JAR file in target container
-      docker_container:
-        name: Prod_Server
-        state: started
-        command: java -jar target/*.jar
+    - name: Copy index.html to docker container
+      community.docker.docker_container_copy_into:
+        container: Prod_Server
+        path: target/*.jar
+        container_path: /
