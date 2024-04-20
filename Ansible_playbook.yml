@@ -1,20 +1,19 @@
-- name: Install Docker and run httpd container
+- name: Install Docker and  Deploy Artifact
   hosts: localhost
-  become: yes
   tasks:
     - name: Install Docker
       package:
         name: docker
         state: present
 
-    - name: Start docker daemon
-      service:
-        name: docker
-        state: started
-        enabled: yes
+   - name: Enable docker service
+     systemd:
+       name: docker.service
+       daemon_reload: true
+       enabled: yes
 
     - name: Copy Jar Artifact to docker container
-      community.docker.docker_container_copy_into:
-        container: Prod_Server
-        path: target/*.jar
-        container_path: /
+      shell: docker cp target/*.jar Prod_Server:/
+
+    - name: Execute/Run the Jar Artifact In Prod
+      shell: docker exec -d -u root Prod_Server sh -c "cd /; java -Dserver.port=9090 -jar *.jar"
