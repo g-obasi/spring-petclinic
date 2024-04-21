@@ -12,8 +12,19 @@ pipeline {
     }
 
     stage('Deploy Artifact on Prod server.') {
-      steps {
-        sh 'ansible-playbook Ansible_playbook.yml'
+      parallel {
+        stage('Deploy Artifact on Prod server.') {
+          steps {
+            sh 'ansible-playbook Ansible_playbook.yml'
+          }
+        }
+
+        stage('print working directory') {
+          steps {
+            sh 'pwd && ls'
+          }
+        }
+
       }
     }
 
