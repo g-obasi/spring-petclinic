@@ -1,6 +1,9 @@
 - name: Install Docker and  Deploy Artifact
   hosts: localhost
   tasks:
+    - name: get working dir
+      shell: pwd && ls
+  
     - name: Copy Jar Artifact to docker container
       shell: pwd && scp target/*.jar prod_admin@172.17.0.3:/home/prod_admin/
 
