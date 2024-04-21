@@ -2,29 +2,29 @@ pipeline {
   agent any
   stages {
     stage('Build') {
-      steps {
-        git(url: 'https://github.com/g-obasi/spring-petclinic.git', branch: 'main')
-        withGradle() {
-          sh './mvnw package'
+      parallel {
+        stage('Build') {
+          steps {
+            git(url: 'https://github.com/g-obasi/spring-petclinic.git', branch: 'main')
+            withGradle() {
+              sh './mvnw package'
+            }
+
+          }
+        }
+
+        stage('PWD and LS') {
+          steps {
+            sh 'pwd && ls'
+          }
         }
 
       }
     }
 
     stage('Deploy Artifact on Prod server.') {
-      parallel {
-        stage('Deploy Artifact on Prod server.') {
-          steps {
-            sh 'ansible-playbook Ansible_playbook.yml'
-          }
-        }
-
-        stage('print working directory') {
-          steps {
-            sh 'pwd && ls'
-          }
-        }
-
+      steps {
+        sh 'ansible-playbook Ansible_playbook.yml'
       }
     }
 
