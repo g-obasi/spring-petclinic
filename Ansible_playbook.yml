@@ -6,4 +6,4 @@
       shell: scp target/*.jar prod_admin@172.17.0.3:/home/prod_admin/
 
     - name: Execute/Run the Jar Artifact In Prod
-      shell: ssh prod_admin@172.17.0.3 "java -Dserver.port=9090 -jar *.jar" &
+      shell: ssh prod_admin@172.17.0.3 "java -Dserver.port=9090 -jar *.jar"
